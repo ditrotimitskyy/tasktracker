@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<div>{{object.title}}</div>
+<div>{{object.user}}</div>
+<div>{{object.due_date}}</div>
+
+<a href="{% url 'task-update' task.id %}" ><button>Update</button></a>
+
+{% endblock content %}

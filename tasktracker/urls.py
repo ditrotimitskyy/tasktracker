@@ -1,5 +1,5 @@
 """
-URL configuration for tasktracker project.
+URL configuration for task_tracker project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -20,6 +20,8 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("task/", include("taskapp.urls")),
-    path("home/", TemplateView.as_view(template_name="base.html"))
+    path('', TemplateView.as_view(template_name="base.html"), name="home"),
+    path('', include("taskapp.urls")),
+    path('accounts/', include("django.contrib.auth.urls")),
+
 ]
