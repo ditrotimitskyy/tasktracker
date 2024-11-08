@@ -16,3 +16,10 @@ class Task(models.Model):
 
     status = models.CharField(choices=STATUS_CHOICES, max_length=10, default="in_prog")
     
+
+
+class Comment(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="comments")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name="comments", null=True, blank=True)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

@@ -3,11 +3,20 @@
 
 {% block content %}
 
+<form method="get">
+    {{form}}
+    <input type="submit" value="Search">
+</form>
+
+
 {% for task in tasks_list  %}
 
     <div>
-        <a href="{% url "task-detail" task.id %}">{{task.title}}</a>
+        <a href="{% url "task-detail" task.id %}">{{task.title}}</a> 
+        {{task.get_status_display}}
     </div>
+
+    
 
 {% endfor %}
 

@@ -3,10 +3,35 @@
 
 {% block content %}
 
-<div>{{object.title}}</div>
-<div>{{object.user}}</div>
-<div>{{object.due_date}}</div>
+<div>{{task.title}}</div>
+<div>{{task.user}}</div>
+<div>{{task.due_date}}</div>
 
-<a href="{% url 'task-update' task.id %}" ><button>Update</button></a>
+<a href="{% url 'task-update' task.id %}" ><button>Update</button></a>  
+<a href="{% url 'task-delete' task.id %}" ><button>Delete</button></a>  
+
+<hr>
+
+<form method="post">
+    {% csrf_token %}
+    {{comment_form}}
+    <input type="submit" value="Send">
+</form>
+
+{% for comment in task.comments.all %}
+    <p>
+        {{comment.user}}
+    </p>
+    <p>
+        {{comment.content}}
+    </p>
+    <p>
+        {{comment.created_at}}
+    </p>
+    <a href="{% url 'comment-update' comment.id %}"> <button>Update</button>  </a>
+{% endfor %}
+
+
+
 
 {% endblock content %}

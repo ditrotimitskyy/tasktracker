@@ -1,20 +1,10 @@
-from django.forms import ModelForm, Form, ChoiceField
+from django.core.exceptions import PermissionDenied
 
 
-from .models import Task
-
-class TaskForm(ModelForm):
-    
-    class Meta:
-        model = Task
-        fields = ("title", "due_date", "status")
-
-
-class TaskFilterForm(Form):
-    STATUS_CHOICES = {
-        "": "All",
-        "done": "Done",
-        "in_prog": "In Progress",
-        "on_pause": "On Pause",
-    }
-    status = ChoiceField(choices=STATUS_CHOICES, required=False, label="Status")
+class UserIsOwnerMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.user == request.user:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied

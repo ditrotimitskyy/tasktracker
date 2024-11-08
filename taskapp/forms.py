@@ -1,7 +1,7 @@
 from django.forms import ModelForm, Form, ChoiceField
 
 
-from .models import Task
+from .models import Task, Comment
 
 class TaskForm(ModelForm):
     
@@ -18,3 +18,9 @@ class TaskFilterForm(Form):
         "on_pause": "On Pause",
     }
     status = ChoiceField(choices=STATUS_CHOICES, required=False, label="Status")
+
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
