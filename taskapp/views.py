@@ -35,8 +35,10 @@ class TaskDetailView(DetailView):
        
         return context
 
+    
     def post(self, request, *args, **kwargs):
-        comment_form = CommentForm(request.POST)
+        comment_form = CommentForm(request.POST, request.FILES)
+        print(request.FILES)
         if comment_form.is_valid():
             new_comment: Comment = comment_form.instance
             new_comment.task = self.get_object()

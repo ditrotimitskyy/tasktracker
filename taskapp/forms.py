@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Form, ChoiceField
+from django.forms import ModelForm, Form, ChoiceField, FileInput
 
 
 from .models import Task, Comment
@@ -23,4 +23,5 @@ class TaskFilterForm(Form):
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        fields = ['content']
+        fields = ['content', 'comment_pic']
+        widgets = {'comment_pic': FileInput()}

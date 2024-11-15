@@ -12,7 +12,7 @@
 
 <hr>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{comment_form}}
     <input type="submit" value="Send">
@@ -25,6 +25,9 @@
     <p>
         {{comment.content}}
     </p>
+        {% if comment.comment_pic %}
+         <img src="{{comment.comment_pic.url}}" alt="{{comment.comment_pic}}">
+        {% endif %}
     <p>
         {{comment.created_at}}
     </p>
