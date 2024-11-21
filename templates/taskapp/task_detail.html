@@ -3,35 +3,47 @@
 
 {% block content %}
 
-<div>{{task.title}}</div>
-<div>{{task.user}}</div>
-<div>{{task.due_date}}</div>
+<h2>{{task.title}}</h2>
+<h3>{{task.user}}</h3>
 
-<a href="{% url 'task-update' task.id %}" ><button>Update</button></a>  
-<a href="{% url 'task-delete' task.id %}" ><button>Delete</button></a>  
+{% if task.due_date %}
+    <p>{{task.due_date}}</p>
+{% else %}
+    <p>no due date is set</p>
+{% endif %}
+
+<a class="btn btn-warning" href="{% url 'task-update' task.id %}" >Update</a>  
+<a class="btn btn-danger" href="{% url 'task-delete' task.id %}" >Delete</a>  
 
 <hr>
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{comment_form}}
-    <input type="submit" value="Send">
+    {{comment_form.as_p}}
+    <input type="submit" value="Send" class="btn btn-success">
 </form>
 
 {% for comment in task.comments.all %}
-    <p>
-        {{comment.user}}
-    </p>
-    <p>
-        {{comment.content}}
-    </p>
+    <div class="card my-card">
         {% if comment.comment_pic %}
-         <img src="{{comment.comment_pic.url}}" alt="{{comment.comment_pic}}">
+            <img class="card-image-top" src="{{comment.comment_pic.url}}" alt="{{comment.comment_pic}}" 
+            height="350px" width="350px"
+            >
         {% endif %}
-    <p>
-        {{comment.created_at}}
-    </p>
-    <a href="{% url 'comment-update' comment.id %}"> <button>Update</button>  </a>
+        <div class="card-body">
+            <h5 class="card-title">
+                {{comment.user}}
+            </h5>
+            <p class="card-text">
+                {{comment.content}}
+            </p>  
+            <span class="date-right">
+                -{{comment.created_at}}
+            </span>
+            <br>
+            <a class="btn btn-warning" href="{% url 'comment-update' comment.id %}"> Update  </a>
+        </div>
+    </div>
 {% endfor %}
 
 
